@@ -16,11 +16,12 @@ or you can directly run them :
 ```
 C:\Users\sina\Desktop\HyperDbg>hyperdbg-cli.exe --script c:\users\sina\desktop\script.txt
 ```
+## Description
 
-## Basics
+### Basics
 **hello_world.dbg**: The *Hello World!* script.
 
-## DFIR (Digital Forensics and Incident Response)
+### DFIR (Digital Forensics and Incident Response)
 **process_behavior_logger.dbg**: Gathering information about different behavior of a process like system calls, memory allocations, CPUIDs, etc.
 
 ## Contributing
