@@ -21,6 +21,8 @@
 # it in the remote debugging in Debugger Mode too. For this purpose,
 # you should remove the '.connect' and 'load' commands and run the
 # script in your target machine.
+# Some of the commands are commented, you can uncomment them if you
+# need its results.
 #
 #
 
