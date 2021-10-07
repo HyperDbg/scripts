@@ -13,7 +13,7 @@
 # It just a simple print message. The '?' at the first line of
 # this command, means that it should be evaluated using HyperDbg's
 # script engine. For more inforamtion, please take a look at :
-#     https://docs.hyperdbg.com/commands/scripting-language
+#     https://docs.hyperdbg.org/commands/scripting-language
 #
 
 ? printf("Hello world!");
