@@ -1,0 +1,1 @@
+### Support to Linux will be added in the future versions!

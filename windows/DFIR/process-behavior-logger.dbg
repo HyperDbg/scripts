@@ -1,4 +1,4 @@
-## @file process_behavior_logger.dbg
+## @file process-behavior-logger.dbg
 # @author HyperDbg Development Team
 # @brief Dataset maker script
 # @version 0.1
@@ -13,7 +13,7 @@
 # to 'pid 1240'.
 # 
 # After that, use the script like: 
-#     .script c:\users\sina\desktop\process_behavior_logger.dbg
+#     .script c:\users\sina\desktop\process-behavior-logger.dbg
 #
 # It gathers different parameters in order to create a dataset
 # from the behavior of a special process.
