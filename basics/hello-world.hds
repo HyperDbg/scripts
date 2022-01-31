@@ -16,4 +16,6 @@
 #     https://docs.hyperdbg.org/commands/scripting-language
 #
 
-? printf("Hello world!");
+? {
+	printf("Hello world!");
+}
