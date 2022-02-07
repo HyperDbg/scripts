@@ -7,30 +7,18 @@
 # 
 # @details In order to run this script, you should use '.script'
 # command. 
-# First, you need to change the Process ID 'pid 4' to your target
-# process ID in all of the commands. For example, if your target 
-# process's ID is 0x1240, then you should change every 'pid 4'(s)
-# to 'pid 1240'.
+# First, you need to specify the Process ID as the first argument.
+# For example, if your target process's ID is 0x1240, then you 
+# run the the scrip like this:
 # 
 # After that, use the script like: 
-#     .script c:\users\sina\desktop\process-behavior-logger.dbg
+#     .script c:\users\sina\desktop\process-behavior-logger.dbg 0x1240
 #
 # It gathers different parameters in order to create a dataset
 # from the behavior of a special process.
-# This script is used in local debugging (VMI Mode), but you can use
-# it in the remote debugging in Debugger Mode too. For this purpose,
-# you should remove the '.connect' and 'load' commands and run the
-# script in your target machine.
 # Some of the commands are commented, you can uncomment them if you
 # need its results.
 #
-#
-
-#
-# This script uses local debugging in VMI Mode
-#
-.connect local
-load vmm
 
 #
 # Configure the symbols, make sure that "ntoskrnl.exe"'s PDB is located 
@@ -48,7 +36,10 @@ load vmm
 # remains its convention and saves the RCX temporarily on R10, so the R10
 # register represents RCX in this case.
 #
-!syscall pid 4 script { printf("method:syscall, pname: %s, pid: %x, tid: %x, syscall: %llx, rcx: %llx, rdx: %llx, r8: %llx, r9: %llx\n", $pname, $pid, $tid, @rax, @r10, @rdx, @r8, @r9); }
+!syscall pid $arg1 script { 
+          printf("method:syscall, pname: %s, pid: %x, tid: %x, syscall: %llx, rcx: %llx, rdx: %llx, r8: %llx, r9: %llx\n", 
+          $pname, $pid, $tid, @rax, @r10, @rdx, @r8, @r9); 
+          }
 
 #
 # And we'll get SYSRET(s), it is because we want to get the result of SYSCALLs
@@ -57,7 +48,9 @@ load vmm
 # looking for the Thread ID.
 # Note that the return result is in the RAX register.
 #
-!sysret pid 4 script { printf("method:sysret, pname: %s, pid: %x, tid: %x, rax: %llx\n", $pname, $pid, $tid, @rax); }
+!sysret pid $arg1 script { 
+          printf("method:sysret, pname: %s, pid: %x, tid: %x, rax: %llx\n", $pname, $pid, $tid, @rax); 
+          }
 
 #
 # The next parameter is kernel memory allocations
@@ -72,43 +65,70 @@ load vmm
 #	);
 # 
 #
-!epthook nt!ExAllocatePoolWithTag pid 4 script { printf("method:kmem, pname: %s, pid: %x, tid: %x, ret: %llx, PoolType: %llx, PoolSize: %llx, PoolTag: %llx\n", $pname, $pid, $tid, poi(@rsp), @rcx, @rdx, @r8); }
+!epthook nt!ExAllocatePoolWithTag pid $arg1 script {
+          printf("method:kmem, pname: %s, pid: %x, tid: %x, ret: %llx, PoolType: %llx, PoolSize: %llx, PoolTag: %llx\n",
+          $pname, $pid, $tid, poi(@rsp), @rcx, @rdx, @r8); 
+          }
 
 #
 # Next, we'll interested in any execution of CPUID instruction
 #
-!cpuid pid 4 script { printf("method:cpuid, pname: %s, pid: %x, tid: %x, rip: %llx, context: %x, eax: %x, ebx: %x, ecx: %x, edx: %x\n", $pname, $pid, $tid, @rip, $context, @eax, @ebx, @ecx, @edx); }
+!cpuid pid $arg1 script { 
+          printf("method:cpuid, pname: %s, pid: %x, tid: %x, rip: %llx, context: %x, eax: %x, ebx: %x, ecx: %x, edx: %x\n",
+          $pname, $pid, $tid, @rip, $context, @eax, @ebx, @ecx, @edx);
+          }
 
 #
 # Create a log from accesses to hardware debug registers
 # THIS COMMAND IS COMMENTED
 #
-# !dr pid 4 script { printf("method:debugregs, pname: %s, pid: %x, tid: %x, rip: %llx\n", $pname, $pid, $tid, @rip); }
+# !dr pid $arg1 script { 
+#         printf("method:debugregs, pname: %s, pid: %x, tid: %x, rip: %llx\n", $pname, $pid, $tid, @rip); 
+#         }
 
 #
 # The other parameter is to get any call to first 32-entries of
 # Interrupt Descriptor Table (IDT)
 # THIS COMMAND IS COMMENTED
 #
-# !exception pid 4 script { printf("method:exception, pname: %s, pid: %x, tid: %x, rip: %llx, context: %x\n", $pname, $pid, $tid, @rip, $context); }
+# !exception pid $arg1 script { 
+#         printf("method:exception, pname: %s, pid: %x, tid: %x, rip: %llx, context: %x\n", 
+#         $pname, $pid, $tid, @rip, $context); 
+#         }
 
 #
 # getting the execution of RDTSC/RDTSCP
 # THIS COMMAND IS COMMENTED
 #
-# !tsc pid 4 script { printf("method:tsc, pname: %s, pid: %x, tid: %x, rip: %llx\n", $pname, $pid, $tid, @rip); }
+# !tsc pid $arg1 script { 
+#         printf("method:tsc, pname: %s, pid: %x, tid: %x, rip: %llx\n", $pname, $pid, $tid, @rip); 
+#         }
 
 #
 # getting the execution of RDMSR/WRMSR
 # THESE COMMANDS ARE COMMENTED
 #
-# !msrread pid 4 script { printf("method:rdmsr, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n", $pname, $pid, $tid, @rip, $context); }
-# !msrwrite pid 4 script { printf("method:wrmsr, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n", $pname, $pid, $tid, @rip, $context); }
+# !msrread pid $arg1 script { 
+#         printf("method:rdmsr, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n",
+#         $pname, $pid, $tid, @rip, $context); 
+#         }
+
+# !msrwrite pid $arg1 script {
+#         printf("method:wrmsr, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n",
+#         $pname, $pid, $tid, @rip, $context); 
+#         }
 
 #
 # getting the execution of I/O instructions (IN & OUT)
 # THESE COMMANDS ARE COMMENTED
 #
-# !ioin pid 4 script { printf("method:in, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n", $pname, $pid, $tid, @rip, $context); }
-# !ioout pid 4 script { printf("method:out, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n", $pname, $pid, $tid, @rip, $context); }
+# !ioin pid $arg1 script {
+#         printf("method:in, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n",
+#         $pname, $pid, $tid, @rip, $context); 
+#         }
+
+# !ioout pid $arg1 script { 
+#         printf("method:out, pname: %s, pid: %x, tid: %x, rip: %llx, context: %llx\n",
+#         $pname, $pid, $tid, @rip, $context);
+#         }
 
