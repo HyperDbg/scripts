@@ -7,6 +7,8 @@
 # 
 # @details In order to run this script, you should use '.script'
 # command. 
+# @param ProcessId The first parameter is the target Process Id
+#
 # First, you need to specify the Process ID as the first argument.
 # For example, if your target process's ID is 0x1240, then you 
 # run the the scrip like this:
