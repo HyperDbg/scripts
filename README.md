@@ -2,7 +2,7 @@
 
 This repo is a collection of useful HyperDbg scripts. HyperDbg uses the "**.ds**" extension (which is stands for **D**ebugger **S**cript).
 
-You can use the '[.script](https://docs.hyperdbg.org/commands/meta-commands/.script)' command to run these scripts. For more examples, take a look at [here](https://docs.hyperdbg.org/using-hyperdbg/examples/running-hyperdbg-script).
+You can use the '[.script](https://docs.hyperdbg.org/commands/meta-commands/.script)' command to run these scripts. For more examples, take a look at [here](https://docs.hyperdbg.org/commands/scripting-language/debugger-script).
 
 ## Usage
 
