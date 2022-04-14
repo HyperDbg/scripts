@@ -1,4 +1,4 @@
-## @file process-behavior-logger.hds
+## @file process-behavior-logger.ds
 # @author HyperDbg Development Team
 # @brief Dataset maker script
 # @version 0.1
@@ -14,7 +14,7 @@
 # run the the scrip like this:
 # 
 # After that, use the script like: 
-#     .script c:\users\sina\desktop\process-behavior-logger.hds 0x1240
+#     .script c:\users\sina\desktop\process-behavior-logger.ds 0x1240
 #
 # It gathers different parameters in order to create a dataset
 # from the behavior of a special process.
