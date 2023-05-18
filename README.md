@@ -19,10 +19,14 @@ C:\Users\sina\Desktop\HyperDbg>hyperdbg-cli.exe --script c:\users\sina\desktop\s
 ## Description
 
 ### Basics
-- **hello_world.ds**: The *Hello World!* script.
+- **hello-world.ds**: The *Hello World!* script.
 
 ### DFIR (Digital Forensics and Incident Response)
-- **process_behavior_logger.ds**: Gathering information about different behavior of a process like system calls, kernel memory allocations, CPUIDs, etc.
+- **process-behavior-logger.ds**: Gathering information about different behavior of a process like system calls, kernel memory allocations, CPUIDs, etc.
+
+### Network
+- **all-connections-ip-port.ds**: Creates a log from all of the network accesses (IP address and port number) for user-mode applications.
+- **process-specific-connections-ip-port.ds**: Creates process-specific logs of the network accesses (IP address and port number).
 
 ## Contributing
 Pull requests are super welcome. For major changes, please open an issue first to discuss what you would like to change.
