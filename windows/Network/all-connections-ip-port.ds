@@ -58,9 +58,9 @@
 
   if (@rax == 0x7) {
   
-    // printf("IoControlCode: %x\n", dw(@rsp + 30));
+    // printf("IoControlCode: %x\n", dd(@rsp + 30));
 
-    if (dw(@rsp + 30) == 0x12007) {
+    if (dd(@rsp + 30) == 0x12007) {
       //
       // Details derived from: https://www.cyberus-technology.de/posts/network-analysis-with-tycho/
       //
