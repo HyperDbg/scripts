@@ -28,6 +28,9 @@ C:\Users\sina\Desktop\HyperDbg>hyperdbg-cli.exe --script c:\users\sina\desktop\s
 - **all-connections-ip-port.ds**: Creates a log from all of the network accesses (IP address and port number) for user-mode applications.
 - **process-specific-connections-ip-port.ds**: Creates process-specific logs of the network accesses (IP address and port number).
 
+### Memory
+- **user-mode-memory-allocations.ds**: Creates a log from memory allocations of a user-mode process (e.g., mallocs).
+
 ## Contributing
 Pull requests are super welcome. For major changes, please open an issue first to discuss what you would like to change.
 
