@@ -24,3 +24,14 @@
   }
   printTime();
 }
+
+//sample for sleep for 25 milis
+? {
+    .t2 = getSecMilis();
+    .t1 = getSecMilis();
+            
+    // Wait for 25 milliseconds
+    while (.t1 - .t2 < 25) {
+       .t1 = getSecMilis();
+    }
+}
